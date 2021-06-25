@@ -42,7 +42,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-![]('https://github.com/K-Pet/Flixter/blob/main/ezgif-6-e4830cd2b754.gif')
+![](https://github.com/K-Pet/Flixter/blob/main/ezgif-6-e4830cd2b754.gif)
 
 GIF created with [Kap](https://getkap.co/).
 
