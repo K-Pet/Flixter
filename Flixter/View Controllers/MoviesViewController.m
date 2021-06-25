@@ -37,12 +37,37 @@
 }
 
 - (void)fetchMovies {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Fetch Movies"
+                                                                               message:@"Please check your network connection and try again."
+                                                                        preferredStyle:(UIAlertControllerStyleAlert)];
+    /* create a cancel action
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                             // handle cancel response here. Doing nothing will dismiss the view.
+                                                      }];
+    // add the cancel action to the alertController
+    [alert addAction:cancelAction];*/
+
+    // create an OK action
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Try Again"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+        [self fetchMovies];
+                                                     }];
+    // add the OK action to the alert controller
+    [alert addAction:okAction];
+    
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
                NSLog(@"%@", [error localizedDescription]);
+               [self presentViewController:alert animated:YES completion:^{
+                   // optional code for what happens after the alert controller has finished presenting
+               }];
+                
            }
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
